@@ -33,16 +33,20 @@ jobs:
             }
             const creds = Buffer.from(`${process.env.JENKINS_USERNAME}:${process.env.JENKINS_TOKEN}`).toString('base64')
 
-            const res = await fetch('https://b7a66f0129a5.ngrok-free.app/job/testing-deploy/buildWithParameters',{
-              method:'POST',
-              headers: {
-                Authorization: `Basic ${creds}`
-              }
-            })
-            console.log('res',res)
+            const res = await fetch('https://b7a66f0129a5.ngrok-free.app/job/testing-deploy/buildWithParameters', {
+                        method: 'POST',
+                        headers: {
+                          Authorization: `Basic ${creds}`
+                        }
+              })
+
+             const body = await res.text()
+             console.log('Status:', res.status, res.statusText)
+             console.log('Response body:', body)
             if (!res.ok) {
-              throw new Error(`Failed to trigger Jenkins: ${res.status} ${res.statusText}`)
+             throw new Error(`Failed to trigger Jenkins: ${res.status} ${res.statusText}`)
             }
+
 
             console.log('✅ Triggered Jenkins Deploy!')
         env:
