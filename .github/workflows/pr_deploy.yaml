@@ -31,12 +31,12 @@ jobs:
               }) 
               return;
             }
-            const creds = Buffer.from(`${process.env.JENKINS_USERNAME}:${process.env.JENKINS_TOKEN}`).toString('base64')
+            const token = Buffer.from(`${process.env.JENKINS_USERNAME}:${process.env.JENKINS_TOKEN}`).toString('base64')
 
             const res = await fetch('https://b7a66f0129a5.ngrok-free.app/job/testing-deploy/buildWithParameters', {
                         method: 'POST',
                         headers: {
-                          Authorization: `Basic ${creds}`
+                          Authorization: `Basic ${token}`
                         }
               })
 
