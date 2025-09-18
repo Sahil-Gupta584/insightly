@@ -43,6 +43,7 @@ jobs:
              const body = await res.text()
              console.log('Status:', res.status, res.statusText)
              console.log('Response body:', body)
+
             if (!res.ok) {
              throw new Error(`Failed to trigger Jenkins: ${res.status} ${res.statusText}`)
             }
