@@ -1,10 +1,10 @@
 "use client";
 import { Button, Card, CardBody } from "@heroui/react";
+import { OAuthProvider } from "appwrite";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { OAuthProvider } from "appwrite";
 
 import { account } from "@/appwrite/clientConfig";
 import Logo from "@/components/logo";
@@ -42,7 +42,7 @@ function AuthCard() {
           <li>
             <Link
               href="/"
-              className="flex gap-2 items-center font-bold text-white text-lg leading-normal"
+              className="flex gap-2 items-center font-bold   text-lg leading-normal"
             >
               <Logo className="h-9" />
             </Link>
@@ -52,7 +52,7 @@ function AuthCard() {
             Create a free account to discover
             <p className="flex">
               {domain?.trim() ? (
-                <p className="font-semibold flex items-center gap-[1px] text-white">
+                <p className="font-semibold flex items-center gap-[1px]  ">
                   <img
                     className="size-2 mx-1"
                     src={`https://icons.duckduckgo.com/ip3/${domain}.ico`}

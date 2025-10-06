@@ -6,7 +6,6 @@ import { useEffect, useMemo, useState } from "react";
 import {
   Area,
   Bar,
-  CartesianGrid,
   ComposedChart,
   ResponsiveContainer,
   Tooltip,
@@ -19,7 +18,6 @@ import GlobalMap from "../globalMap";
 import { subscribeToRealtime } from "../globalMap/actions";
 
 import AnimatedCounter from "@/components/animatedCounter";
-import { useChartTheme } from "@/hooks/useChartTheme";
 import { TLiveVisitor, TWebsite } from "@/lib/types";
 import { getLabel } from "@/lib/utils/server";
 
@@ -90,8 +88,6 @@ function MainGraph({
     }
   }, [showMap]);
 
-  const colors = useChartTheme();
-
   function Tick({ x, y, index }: any) {
     const step = Math.ceil(data.length / 8);
     const isVisible = index % step === 0 || index === data.length - 1;
@@ -100,7 +96,7 @@ function MainGraph({
 
     return (
       <g transform={`translate(${x},${y + 10})`}>
-        <text textAnchor="middle" fill={colors.axis} fontSize={12}>
+        <text textAnchor="middle" fill="#999" fontSize={12}>
           {data[index].label}
         </text>
       </g>
@@ -175,7 +171,7 @@ function MainGraph({
 
   return (
     <>
-      <Card className="mt-2 border border-neutral-200 dark:border-[#373737] md:col-span-2">
+      <Card className="mt-2 md:col-span-2">
         <CardHeader>
           <div className="grid grid-cols-3 md:grid-cols-7 items-center">
             {headerData.map((d) => (
@@ -216,24 +212,10 @@ function MainGraph({
             <ComposedChart data={data} className="outline-none">
               <defs>
                 <linearGradient id="lineGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop
-                    offset="0%"
-                    stopColor={colors.primary}
-                    stopOpacity={0.4}
-                  />
-                  <stop
-                    offset="100%"
-                    stopColor={colors.primary}
-                    stopOpacity={0}
-                  />
+                  <stop offset="0%" stopColor="#fd366e" stopOpacity={0.4} />
+                  <stop offset="100%" stopColor="#fd366e" stopOpacity={0} />
                 </linearGradient>
               </defs>
-
-              <CartesianGrid
-                strokeDasharray="3 3"
-                vertical={false}
-                stroke={colors.grid}
-              />
 
               <XAxis
                 dataKey="id"
@@ -242,7 +224,7 @@ function MainGraph({
                 tick={<Tick />}
               />
 
-              <YAxis stroke={colors.axis} />
+              <YAxis stroke="#999" />
 
               <Tooltip
                 content={({ payload }) => (
@@ -259,7 +241,7 @@ function MainGraph({
               <Area
                 type="monotone"
                 dataKey="visitors"
-                stroke={colors.primary}
+                stroke="#fd366e"
                 strokeWidth={2}
                 fill="url(#lineGradient)"
                 isAnimationActive
@@ -269,7 +251,7 @@ function MainGraph({
               <Bar
                 hide={!isRevenueSelected}
                 dataKey="revenue"
-                fill={colors.secondary}
+                fill="#e78468"
                 radius={[6, 6, 0, 0]}
                 barSize={25}
               />

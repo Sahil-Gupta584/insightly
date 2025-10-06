@@ -86,7 +86,7 @@ function Page() {
       <p className="text-gray-400!">
         Once connected and metadata is properly passed, DataFast will
         automatically attribute revenue to the correct marketing channels.
-        <b className="font-bold text-white"> No webhook setup is required.</b>
+        <b className="font-bold  "> No webhook setup is required.</b>
       </p>
     </section>
   );

@@ -122,7 +122,7 @@ export default function NewWebsite() {
         classNames={{
           base: "w-full py-4",
           tabList: ["bg-transparent px-0 "],
-          tabContent: "group-data-[selected=true]:text-white",
+          tabContent: "group-data-[selected=true]: ",
           cursor: "bg-transparent!",
           panel: "p-0 w-full",
           tab: "opacity-100!",
@@ -195,7 +195,7 @@ export default function NewWebsite() {
                 <Button
                   type="submit"
                   isLoading={isSubmitting}
-                  className="w-full bg-pink-600 text-white hover:bg-pink-500 rounded-xl py-3 mt-6"
+                  className="w-full bg-pink-600   hover:bg-pink-500 rounded-xl py-3 mt-6"
                 >
                   Add website
                 </Button>
@@ -240,7 +240,7 @@ export default function NewWebsite() {
                     router.push(url);
                   }}
                   isLoading={isSubmitting}
-                  className="w-full bg-pink-600 text-white hover:bg-pink-500 rounded-xl py-3 mt-6"
+                  className="w-full bg-pink-600   hover:bg-pink-500 rounded-xl py-3 mt-6"
                   endContent={
                     <IoIosArrowRoundUp className="rotate-90 size-6" />
                   }

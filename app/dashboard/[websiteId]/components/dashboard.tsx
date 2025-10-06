@@ -1,5 +1,5 @@
 "use client";
-import { Card, CardBody, CardHeader, Divider } from "@heroui/react";
+import { Card, CardHeader, Divider } from "@heroui/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useParams } from "next/navigation";
@@ -14,12 +14,7 @@ import Filters from "./filters";
 import WaitForFirstEvent from "./WaitForFirstEvent";
 
 import { account } from "@/appwrite/clientConfig";
-import {
-  CustomEventsLoader,
-  GraphLoader,
-  LocationSystemChartsLoader,
-  MainGraphLoader,
-} from "@/components/loaders";
+import { GraphLoader, MainGraphLoader } from "@/components/loaders";
 import { TWebsite } from "@/lib/types";
 
 export default function Dashboard() {
@@ -134,7 +129,7 @@ export default function Dashboard() {
         />
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-[minmax(459px,auto)]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-[minmax(459px,auto)] mt-4">
         {mainGraphQuery.isFetching || !mainGraphQuery.data ? (
           <MainGraphLoader />
         ) : (
@@ -149,53 +144,52 @@ export default function Dashboard() {
             conversionRate={otherGraphQuery.data?.overallConversionRate}
           />
         )}
-
-        <Card className="border border-neutral-200 dark:border-[#373737]">
-          <CardHeader>Page</CardHeader>
-          <Divider />
-          {otherGraphQuery.isFetching || !pageData ? (
-            <GraphLoader />
-          ) : (
+        {otherGraphQuery.isFetching || !pageData ? (
+          <GraphLoader length={1} />
+        ) : (
+          <Card className="border border-neutral-200 dark:border-[#373737]">
+            <CardHeader>Page</CardHeader>
+            <Divider />
             <CommonChart data={pageData} />
-          )}
-        </Card>
+          </Card>
+        )}
 
-        <Card className="border border-neutral-200 dark:border-[#373737]">
-          <CardHeader>Referrer</CardHeader>
-          <Divider />
-          <CardBody className="p-0">
-            {otherGraphQuery.isFetching || !referrerData ? (
-              <GraphLoader />
-            ) : (
-              <CommonChart data={referrerData} />
-            )}
-          </CardBody>
-        </Card>
+        {otherGraphQuery.isFetching || !referrerData ? (
+          <GraphLoader length={1} />
+        ) : (
+          <Card className="border border-neutral-200 dark:border-[#373737]">
+            <CardHeader>Referrer</CardHeader>
+            <Divider />
+            <CommonChart data={referrerData} />
+          </Card>
+        )}
 
         {otherGraphQuery.isFetching ||
         !countryData ||
         !cityData ||
-        !regionData ||
+        !regionData ? (
+          <GraphLoader length={3} />
+        ) : (
+          <LocationCharts
+            countryData={countryData}
+            regionData={regionData}
+            cityData={cityData}
+          />
+        )}
+        {otherGraphQuery.isFetching ||
         !browserData ||
         !deviceData ||
         !osData ? (
-          <LocationSystemChartsLoader />
+          <GraphLoader length={3} />
         ) : (
-          <>
-            <LocationCharts
-              countryData={countryData}
-              regionData={regionData}
-              cityData={cityData}
-            />
-            <SystemCharts
-              browserData={browserData}
-              deviceData={deviceData}
-              osData={osData}
-            />
-          </>
+          <SystemCharts
+            browserData={browserData}
+            deviceData={deviceData}
+            osData={osData}
+          />
         )}
         {goalsQuery.isFetching || !goalsQuery.data ? (
-          <CustomEventsLoader />
+          <GraphLoader className="md:col-span-2" length={1} />
         ) : (
           <CustomEvents
             goalsData={goalsQuery.data}

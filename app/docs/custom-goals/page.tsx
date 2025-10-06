@@ -13,7 +13,7 @@ function Page() {
     child?: React.ReactNode;
   }) {
     return (
-      <h2 className={`font-bold text-${size} text-white`}>
+      <h2 className={`font-bold text-${size}  `}>
         {text}
         {child}
       </h2>
@@ -64,7 +64,7 @@ function Page() {
           size="md"
           child={<ChipComponent child="goal_name:" />}
         />
-        <ul className="list-disc space-y-2 [&_strong]:text-white">
+        <ul className="list-disc space-y-2 [&_strong]: ">
           <li>
             <strong>Property names: </strong>
             lowercase letters, numbers, underscores (_), and hyphens (-) only.

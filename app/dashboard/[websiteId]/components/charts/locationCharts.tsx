@@ -2,14 +2,15 @@
 import { Card, CardBody, Tab, Tabs } from "@heroui/react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { Tooltip } from "react-tooltip";
-
 import "react-tooltip/dist/react-tooltip.css";
+
+import { useTheme } from "next-themes";
+
 import CommonTooltip from "../commonTooltip";
 
 import { CommonChart, CommonChartProps } from "./commonChart";
 
 import { getCountryName } from "@/lib/utils/client";
-import { useChartTheme } from "@/hooks/useChartTheme";
 
 const geoUrl =
   "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson";
@@ -21,45 +22,66 @@ interface LocationChartProps {
 }
 
 export const classNames = {
-  tabList: ["bg-transparent p-3 "],
-  tabContent: "group-data-[selected=true]:text-neutral-900 dark:text-white",
+  tabList: "bg-transparent p-3",
+  tabContent:
+    "group-data-[selected=true]:text-neutral-900 dark:group-data-[selected=true]:text-white",
   cursor: "bg-transparent",
   panel: "p-0 h-full overflow-x-hidden",
+  base: "border-b-[1px] rounded-none w-full border-b-neutral-200 dark:border-b-[#ffffff26]",
 };
+
 export default function LocationCharts({
   cityData,
   countryData,
   regionData,
 }: LocationChartProps) {
-  const colors = useChartTheme();
+  const { resolvedTheme } = useTheme();
+
+  // 🎨 Define theme-based colors
+  const colors = {
+    dark: {
+      base: "#1d1d21",
+      stroke: "#4A5568",
+      hoverStroke: "#EC4899",
+      high: "#fd366e",
+      medium: "#fd366eb3",
+      low: "#fd366e38",
+    },
+    light: {
+      base: "#e5e7eb", // light gray
+      stroke: "#d1d5db", // lighter border
+      hoverStroke: "#ec4899", // pink still pops in light
+      high: "#db2777",
+      medium: "#db2777b3",
+      low: "#db277738",
+    },
+  };
+
+  const themeColors = resolvedTheme === "light" ? colors.light : colors.dark;
+
   const getCountryDetails = (countryCode: string) => {
     const country = countryData.find((c) => c.countryCode == countryCode);
-    let opacity = 0.1;
+    let color = themeColors.base;
 
     if (country) {
       const maxVisitors = Math.max(...countryData.map((c) => c.visitors));
       const intensity = country.visitors / maxVisitors;
 
-      if (intensity > 0.7) opacity = 0.9; // High
-      else if (intensity > 0.4) opacity = 0.6; // Medium
-      else if (intensity > 0.1) opacity = 0.25; // Low
+      if (intensity > 0.7) color = themeColors.high;
+      else if (intensity > 0.4) color = themeColors.medium;
+      else if (intensity > 0.1) color = themeColors.low;
     }
 
     return {
-      opacity,
+      color,
       ...country,
     };
   };
 
   return (
-    <Card className="border border-divider">
+    <Card>
       <CardBody className="h-80 overflow-hidden p-0">
-        <Tabs
-          aria-label="Options"
-          className="border-b rounded-none w-full border-divider"
-          classNames={classNames}
-          color="secondary"
-        >
+        <Tabs aria-label="Options" classNames={classNames}>
           <Tab key="map" title={<span>Map</span>}>
             <ComposableMap
               projection="geoMercator"
@@ -80,32 +102,30 @@ export default function LocationCharts({
                       <Geography
                         key={geo.rsmKey}
                         geography={geo}
-                        fill={colors.primary}
-                        stroke={colors.grid}
+                        fill={countryDetails.color}
+                        stroke={themeColors.stroke}
                         strokeWidth={0.5}
                         style={{
                           default: {
-                            fill: colors.primary,
-                            fillOpacity: countryDetails.opacity,
-                            stroke: colors.grid,
+                            fill: countryDetails.color,
+                            stroke: themeColors.stroke,
                             strokeWidth: 0.5,
                             outline: "none",
                           },
                           hover: {
-                            stroke: colors.primary,
+                            stroke: themeColors.hoverStroke,
                             strokeWidth: 1,
                             outline: "none",
-                            border: `1px solid ${colors.primary}`,
                             cursor: "pointer",
                           },
                           pressed: {
-                            fill: colors.primary,
-                            stroke: colors.primary,
+                            fill: themeColors.hoverStroke,
+                            stroke: themeColors.hoverStroke,
                             strokeWidth: 1,
                             outline: "none",
                           },
                         }}
-                        data-tooltip-id="map-tooltip" // <-- connect tooltip
+                        data-tooltip-id="map-tooltip"
                         data-tooltip-content={JSON.stringify({
                           countryCode,
                           ...countryDetails,
@@ -126,7 +146,6 @@ export default function LocationCharts({
               }}
               render={({ content }) => {
                 let parsed: any;
-
                 try {
                   parsed = JSON.parse(content as string);
                 } catch {
@@ -142,6 +161,7 @@ export default function LocationCharts({
               }}
             />
           </Tab>
+
           <Tab key="country" title="Country">
             <CommonChart data={countryData} />
           </Tab>

@@ -97,7 +97,7 @@ function GeneralTab({ websiteId }: { websiteId: string }) {
             description={
               <p className="text-gray-400">
                 Your website ID is
-                <span className="m-1 font-semibold text-white hover:underline cursor-pointer">
+                <span className="m-1 font-semibold   hover:underline cursor-pointer">
                   {websiteId}
                 </span>
               </p>

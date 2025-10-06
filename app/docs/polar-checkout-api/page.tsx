@@ -92,8 +92,8 @@ function Page() {
               onClick={() => setSelectedLang(lang)}
               className={`px-3 py-1 rounded-md capitalize transition ${
                 selectedLang === lang
-                  ? "bg-primary text-white"
-                  : "text-gray-400 hover:text-white hover:bg-gray-700"
+                  ? "bg-primary  "
+                  : "text-gray-400 hover:  hover:bg-gray-700"
               } cursor-pointer`}
             >
               {lang}
@@ -125,7 +125,7 @@ function Page() {
       <p className="text-gray-400!">
         Once connected and metadata is properly passed, DataFast will
         automatically attribute revenue to the correct marketing channels.
-        <b className="font-bold text-white"> No webhook setup is required.</b>
+        <b className="font-bold  "> No webhook setup is required.</b>
       </p>
     </section>
   );

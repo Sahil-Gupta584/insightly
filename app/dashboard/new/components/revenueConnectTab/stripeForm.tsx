@@ -112,7 +112,7 @@ export function LinkWithTraffic({ isDisabled }: { isDisabled: boolean }) {
           <NextLink
             text="Get started here"
             href="/docs/revenue-attribution-guide"
-            className="font-semibold text-white"
+            className="font-semibold  "
             blank
           />
           <span>(it takes 2 minutes).</span>

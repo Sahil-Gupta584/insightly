@@ -40,7 +40,7 @@ function Filters({
       <Select
         variant="flat"
         classNames={{
-          trigger: "bg-transparent cursor-pointer gap-4",
+          trigger: " cursor-pointer gap-4",
           selectorIcon: "static",
           spinner: "static",
           value: "font-semibold text-lg",
@@ -60,7 +60,6 @@ function Filters({
           items.map((item) => {
             return (
               <div
-                // href={item.textValue || (item.data?.domain as string)}
                 className="font-semibold text-md flex items-center gap-2"
                 key={item.textValue}
               >
@@ -99,11 +98,10 @@ function Filters({
         </SelectSection>
       </Select>
 
-      {/* Duration selector */}
       <Select
         className="max-w-3xs "
         classNames={{
-          trigger: "bg-transparent cursor-pointer",
+          trigger: " cursor-pointer",
           value: "font-semibold text-md",
         }}
         placeholder="Duration"
@@ -125,8 +123,10 @@ function Filters({
           if (refetchOthers) refetchOthers();
           if (refetchGoals) refetchGoals();
         }}
+        isIconOnly
         spinner={<TfiReload className="animate-spinner-ease-spin" />}
-        className="bg-transparent"
+        variant="shadow"
+        className="font-semibold shadow-lg transition-all duration-200 hover:scale-105"
       >
         {!isLoading && <TfiReload />}
       </Button>

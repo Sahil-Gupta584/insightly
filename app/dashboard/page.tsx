@@ -51,7 +51,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen w-full  text-white p-6">
+    <div className="min-h-screen w-full    p-6">
       <div className="max-w-6xl mx-auto flex flex-col gap-6">
         <Link href="/dashboard/new" className="self-end">
           <Button
@@ -60,7 +60,7 @@ export default function Dashboard() {
             className="bg-primary cursor-pointer hover:border-primary-900 border-2 border-transparent 
              transition-transform duration-150 ease-in-out 
              translate-y-0 active:translate-y-1 
-             text-white w-fit self-end"
+               w-fit self-end"
           >
             Add Website
           </Button>
@@ -107,7 +107,7 @@ export default function Dashboard() {
                   </div>
                   {/* Stats */}
                   <div className="flex items-center gap-2 text-sm text-neutral-400">
-                    <span className="font-semibold text-white">
+                    <span className="font-semibold  ">
                       {Array.isArray(website.events)
                         ? website.events.length
                         : 0}

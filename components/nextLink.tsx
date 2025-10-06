@@ -15,7 +15,7 @@ function NextLink({
 }) {
   return (
     <Link
-      className={`underline mx-1 hover:text-white transition ${className}`}
+      className={`underline mx-1 hover:  transition ${className}`}
       href={href}
       target={blank ? "_blank" : "_self"}
     >

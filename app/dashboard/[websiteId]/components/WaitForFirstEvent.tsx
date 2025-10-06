@@ -27,7 +27,7 @@ export default function WaitForFirstEvent({
             <span
               role="status"
               aria-label="Loading"
-              className="inline-block w-3 h-3 rounded-full  border mt- border-current border-t-transparent animate-spin text-white"
+              className="inline-block w-3 h-3 rounded-full  border mt- border-current border-t-transparent animate-spin  "
             />
           </li>
           <ol className="list-decimal list-inside text-warning-500 ">

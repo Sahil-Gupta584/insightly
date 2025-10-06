@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Button,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -12,9 +13,9 @@ import {
   NavbarItem,
   User,
 } from "@heroui/react";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
 import React from "react";
 
 import Logo from "./logo";
@@ -45,7 +46,7 @@ export function Nav({
       <NavbarBrand>
         <Link
           href="/dashboard"
-          className="flex gap-2 font-bold text-white text-lg leading-normal"
+          className="flex gap-2 font-bold  text-lg leading-normal"
         >
           <Logo />
           Insightly
@@ -61,43 +62,31 @@ export function Nav({
           ) : (
             <Dropdown
               showArrow
-              classNames={{
-                base: "before:bg-neutral-800", // arrow bg
-                content:
-                  "p-0 border border-neutral-800 rounded-lg shadow-lg bg-[#222225]",
-              }}
-              radius="sm"
+              // classNames={{
+              //   content:
+              //     "p-0 border border-neutral-800 rounded-lg shadow-lg bg-[#222225]",
+              // }}
+              // radius="sm"
             >
               <DropdownTrigger>
-                <User
-                  avatarProps={{
-                    size: "sm",
-                    src: user?.image,
-                  }}
-                  classNames={{
-                    name: "text-white",
-                    description: "text-neutral-400",
-                  }}
-                  className="cursor-pointer hover:bg-neutral-700 transition p-2"
-                  name={user?.name || "rose berry"}
-                />
+                <Button
+                  variant="ghost"
+                  className="font-semibold shadow-md transition-all duration-200 hover:scale-105"
+                >
+                  <User
+                    avatarProps={{
+                      // size: "",
+                      src: user?.image,
+                      className: "size-6",
+                    }}
+                    name={user?.name || "rose berry"}
+                  />
+                </Button>
               </DropdownTrigger>
               <DropdownMenu
                 aria-label="User menu"
                 className="p-2"
                 disabledKeys={["profile"]}
-                itemClasses={{
-                  base: [
-                    "rounded-md",
-                    "text-neutral-400",
-                    "transition-colors",
-                    "data-[hover=true]:text-white",
-                    "data-[hover=true]:bg-neutral-700",
-                    "data-[selectable=true]:focus:bg-neutral-600",
-                    "data-[pressed=true]:opacity-70",
-                    "data-[focus-visible=true]:ring-pink-500",
-                  ],
-                }}
               >
                 {/* Profile Section */}
                 <DropdownSection showDivider aria-label="Profile & Actions">
@@ -111,7 +100,7 @@ export function Nav({
                         className: "hidden",
                       }}
                       classNames={{
-                        name: "text-white",
+                        name: "",
                         description: "text-neutral-400",
                       }}
                       description={user?.email}

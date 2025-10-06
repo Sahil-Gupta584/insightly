@@ -17,8 +17,8 @@ function CodeBlock({ codeSamples }: { codeSamples: Record<string, string> }) {
               onClick={() => setSelectedLang(lang)}
               className={`px-3 py-1 rounded-md capitalize transition ${
                 selectedLang === lang
-                  ? "bg-primary text-white"
-                  : "text-gray-400 hover:text-white hover:bg-gray-700"
+                  ? "bg-primary  "
+                  : "text-gray-400 hover:  hover:bg-gray-700"
               } cursor-pointer`}
             >
               {lang}

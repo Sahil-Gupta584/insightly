@@ -19,7 +19,7 @@ function LandingPageNav({ user }: { user: User | null }) {
       <NavbarBrand>
         <Link
           href="/dashboard"
-          className="flex gap-2 font-bold text-neutral-900 dark:text-white text-lg leading-normal"
+          className="flex gap-2 font-bold text-neutral-900 dark:  text-lg leading-normal"
         >
           <Logo />
           Insightly
