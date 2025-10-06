@@ -171,7 +171,7 @@ function MainGraph({
 
   return (
     <>
-      <Card className="mt-2 md:col-span-2">
+      <Card className="mt-2 md:col-span-2 border-default border-medium">
         <CardHeader>
           <div className="grid grid-cols-3 md:grid-cols-7 items-center">
             {headerData.map((d) => (

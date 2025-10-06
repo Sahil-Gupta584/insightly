@@ -40,7 +40,7 @@ function Filters({
       <Select
         variant="flat"
         classNames={{
-          trigger: " cursor-pointer gap-4",
+          trigger: "cursor-pointer gap-8 border-default border-medium",
           selectorIcon: "static",
           spinner: "static",
           value: "font-semibold text-lg",
@@ -79,7 +79,7 @@ function Filters({
                 as={Link}
                 href={`/dashboard/${website.$id}`}
               >
-                <div className="font-semibold text-md flex items-center gap-2">
+                <div className="font-semibold text-md flex items-center gap-2 whitespace-nowrap">
                   <Favicon domain={website.domain} />
                   {website.domain}
                 </div>
@@ -99,9 +99,9 @@ function Filters({
       </Select>
 
       <Select
-        className="max-w-3xs "
         classNames={{
-          trigger: " cursor-pointer",
+          trigger: "border-default border-medium cursor-pointer",
+          base: "max-w-3xs",
           value: "font-semibold text-md",
         }}
         placeholder="Duration"
@@ -125,8 +125,8 @@ function Filters({
         }}
         isIconOnly
         spinner={<TfiReload className="animate-spinner-ease-spin" />}
-        variant="shadow"
-        className="font-semibold shadow-lg transition-all duration-200 hover:scale-105"
+        variant="ghost"
+        className="font-semibold shadow-md transition-all duration-200 hover:scale-105"
       >
         {!isLoading && <TfiReload />}
       </Button>

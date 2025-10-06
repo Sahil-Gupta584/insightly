@@ -4,9 +4,12 @@ import {
   BarChart,
   LabelList,
   ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+
+import CommonTooltip from "../commonTooltip";
 
 import { Metric } from "@/lib/types";
 import { formatNumber } from "@/lib/utils/client";
@@ -23,7 +26,7 @@ function CustomBarShape({ x, y, width, height, bar, payload }: any) {
       className="cursor-pointer"
     >
       <div
-        className={`group-hover:opacity-40 hover:!opacity-100 flex items-center ${bar === "visitor" ? "" : "rounded-r-md"} ${!hasRevenue ? "rounded-r-md" : ""} h-full transition cursor-pointer ${bar == "visitor" ? "bg-[#fd366e]/50 mr-[2px]" : "bg-[#e78468]/50"} z-10 `}
+        className={`group-hover:opacity-40 hover:!opacity-100 flex items-center ${bar === "visitor" ? "" : "rounded-r-md"} ${!hasRevenue ? "rounded-r-md" : ""} h-full transition cursor-pointer ${bar == "visitor" ? "bg-[#fd366e]/50 mr-[2px]" : "bg-[#e78468]/50"} `}
       />
     </foreignObject>
   );
@@ -64,6 +67,31 @@ export function CommonChart({
               shape={<CustomBarShape bar={"visitor"} />}
             >
               <LabelList
+                content={({ height, y, value, index }) => {
+                  return (
+                    <foreignObject x={10} y={y} width="100%" height={height}>
+                      <div className="w-full h-full flex flex-col cursor-pointer">
+                        <span className="flex gap-2 items-center pt-1   text-[14px]">
+                          {index !== undefined && data[index].imageUrl && (
+                            <img
+                              className="size-[18px]"
+                              alt=""
+                              src={data[index].imageUrl}
+                            />
+                          )}
+
+                          {value}
+                        </span>
+                      </div>
+                    </foreignObject>
+                  );
+                }}
+                position="top"
+                dataKey="label"
+              />
+            </Bar>
+            <Bar dataKey="revenue" shape={<CustomBarShape />} stackId="a">
+              <LabelList
                 content={({ height, y, value }) => (
                   <foreignObject x={-5} y={y} width="100%" height={height}>
                     <div className="w-full h-full flex flex-col cursor-pointer">
@@ -87,43 +115,17 @@ export function CommonChart({
                 position="top"
                 dataKey="visitors"
               />
-
-              <LabelList
-                content={({ height, y, value, index }) => {
-                  return (
-                    <foreignObject x={10} y={y} width="100%" height={height}>
-                      <div className="w-full h-full flex flex-col cursor-pointer z-100">
-                        <span className="flex gap-2 items-center pt-1   text-[14px]">
-                          {index !== undefined && data[index].imageUrl && (
-                            <img
-                              className="size-[18px]"
-                              alt=""
-                              src={data[index].imageUrl}
-                            />
-                          )}
-
-                          {value}
-                        </span>
-                      </div>
-                    </foreignObject>
-                  );
-                }}
-                position="top"
-                dataKey="label"
-              />
             </Bar>
 
-            <Bar dataKey="revenue" shape={<CustomBarShape />} stackId="a" />
-
-            {/* <Tooltip
-            cursor={{ fill: "none" }}
-            content={({ payload }) => (
-              <CommonTooltip
-                data={payload?.[0]?.payload}
-                label={payload?.[0]?.payload?.label}
-              />
-            )}
-          /> */}
+            <Tooltip
+              cursor={{ fill: "none" }}
+              content={({ payload }) => (
+                <CommonTooltip
+                  data={payload?.[0]?.payload}
+                  label={payload?.[0]?.payload?.label}
+                />
+              )}
+            />
           </BarChart>
         </ResponsiveContainer>
       ) : (

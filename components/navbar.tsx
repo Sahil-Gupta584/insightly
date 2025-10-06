@@ -60,14 +60,7 @@ export function Nav({
           {endContent ? (
             endContent
           ) : (
-            <Dropdown
-              showArrow
-              // classNames={{
-              //   content:
-              //     "p-0 border border-neutral-800 rounded-lg shadow-lg bg-[#222225]",
-              // }}
-              // radius="sm"
-            >
+            <Dropdown showArrow>
               <DropdownTrigger>
                 <Button
                   variant="ghost"
@@ -75,7 +68,6 @@ export function Nav({
                 >
                   <User
                     avatarProps={{
-                      // size: "",
                       src: user?.image,
                       className: "size-6",
                     }}
