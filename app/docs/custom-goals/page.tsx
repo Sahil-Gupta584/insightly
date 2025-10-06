@@ -13,7 +13,7 @@ function Page() {
     child?: React.ReactNode;
   }) {
     return (
-      <h2 className={`font-bold text-${size}  `}>
+      <h2 className={`font-bold text-${size} text-black dark:text-white `}>
         {text}
         {child}
       </h2>

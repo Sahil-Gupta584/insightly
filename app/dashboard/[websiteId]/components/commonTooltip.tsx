@@ -9,7 +9,7 @@ function CommonTooltip({
   label: string | React.ReactNode;
 }) {
   return (
-    <Card className=" min-w-3xs rounded-md">
+    <Card className="min-w-3xs bg-content4 border-medium border-default">
       <CardBody>
         <CardHeader className="text-sm font-medium p-0">{label}</CardHeader>
         <Divider className="my-2" />
