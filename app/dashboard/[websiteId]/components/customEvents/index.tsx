@@ -43,7 +43,7 @@ function CustomEvents({
             ) : (
               <div className="relative flex">
                 <Image
-                  src={`/images/goals${theme.resolvedTheme === "light" && "-light"}.png`}
+                  src={`/images/goals${theme.resolvedTheme === "light" ? "-light" : ""}.png`}
                   width={500}
                   height={500}
                   alt=""
