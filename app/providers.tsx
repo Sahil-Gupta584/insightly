@@ -32,7 +32,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <ToastProvider placement="top-center" />
         <NextThemesProvider
           attribute={"class"}
-          defaultTheme={"dark"}
+          defaultTheme={"system"}
           enableSystem={true}
         >
           {children}

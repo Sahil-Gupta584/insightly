@@ -7,6 +7,7 @@ import {
   Tab,
   Tabs,
 } from "@heroui/react";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -22,6 +23,7 @@ function CustomEvents({
   goalsData: CommonChartProps["data"];
   totalVisitors: number;
 }) {
+  const theme = useTheme();
   return (
     <Card className="border border-neutral-200 dark:border-[#373737] mt-4 md:col-span-2">
       <CardBody className="h-80 overflow-hidden p-0">
@@ -41,7 +43,7 @@ function CustomEvents({
             ) : (
               <div className="relative flex">
                 <Image
-                  src="/images/goals.png"
+                  src={`/images/goals${theme.resolvedTheme === "light" && "-light"}.png`}
                   width={500}
                   height={500}
                   alt=""

@@ -17,12 +17,12 @@ export default function WaitForFirstEvent({
       color="warning"
       icon={<FiAlertTriangle />}
       hideIcon
-      className="dark:bg-[#312107]  border-warning-100 border text-sm fixed bottom-5 left-5 w-fit __className_23ba4a z-50"
+      className="dark:bg-[#312107]  border-warning border text-sm fixed bottom-5 left-5 w-fit __className_23ba4a z-50 text-warning-600"
     >
       <div className="flex gap-3">
         <GoAlertFill className="mt-1 text-black" fill="#eab308" />
         <ul>
-          <li className="flex gap-2 font-medium text-warning-600">
+          <li className="flex gap-2 font-medium text-warning-900">
             Awaiting the first event...
             <span
               role="status"
@@ -30,7 +30,7 @@ export default function WaitForFirstEvent({
               className="inline-block w-3 h-3 rounded-full  border mt- border-current border-t-transparent animate-spin  "
             />
           </li>
-          <ol className="list-decimal list-inside text-warning-500 ">
+          <ol className="list-decimal list-inside ">
             <li className="flex">
               Install the script using the{" "}
               <NextLink

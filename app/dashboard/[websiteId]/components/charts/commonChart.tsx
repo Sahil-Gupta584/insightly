@@ -41,78 +41,81 @@ export function CommonChart({
 }: CommonChartProps) {
   return (
     <CardBody className={`space-y-2 px-0 h-full scrollbar-hide`}>
-      <ResponsiveContainer
-        width="100%"
-        height={data.length * 40}
-        className="max-h-[381px]"
-      >
-        <BarChart
-          data={data}
-          layout="vertical"
-          margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
-          barGap={4}
-          className="group"
+      {data?.length > 0 ? (
+        <ResponsiveContainer
+          width="100%"
+          height={data.length * 40}
+          className="max-h-[381px]"
         >
-          <XAxis type="number" hide />
-          <YAxis type="category" dataKey="label" hide />
-
-          <Bar
-            legendType="cross"
-            dataKey="visitors"
-            stackId={"a"}
-            shape={<CustomBarShape bar={"visitor"} />}
+          <BarChart
+            data={data}
+            layout="vertical"
+            margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+            barGap={4}
+            className="group"
           >
-            <LabelList
-              content={({ height, y, value }) => (
-                <foreignObject x={-5} y={y} width="100%" height={height}>
-                  <div className="w-full h-full flex flex-col cursor-pointer">
-                    <span className="self-end pr-2 mt-[2px]">
-                      {formatNumber(Number(value) || 0)}
-                      {showConversion && totalVisitors ? (
-                        <>
-                          &nbsp; (
-                          {(+(Number(value) / totalVisitors) * 100).toFixed(2)}
-                          %)
-                        </>
-                      ) : (
-                        ""
-                      )}
-                    </span>
-                  </div>
-                </foreignObject>
-              )}
-              position="top"
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="label" hide />
+
+            <Bar
+              legendType="cross"
               dataKey="visitors"
-            />
-
-            <LabelList
-              content={({ height, y, value, index }) => {
-                return (
-                  <foreignObject x={10} y={y} width="100%" height={height}>
-                    <div className="w-full h-full flex flex-col cursor-pointer z-100">
-                      <span className="flex gap-2 items-center pt-1   text-[14px]">
-                        {index !== undefined && data[index].imageUrl && (
-                          <img
-                            className="size-[18px]"
-                            alt=""
-                            src={data[index].imageUrl}
-                          />
+              stackId={"a"}
+              shape={<CustomBarShape bar={"visitor"} />}
+            >
+              <LabelList
+                content={({ height, y, value }) => (
+                  <foreignObject x={-5} y={y} width="100%" height={height}>
+                    <div className="w-full h-full flex flex-col cursor-pointer">
+                      <span className="self-end pr-2 mt-[2px]">
+                        {formatNumber(Number(value) || 0)}
+                        {showConversion && totalVisitors ? (
+                          <>
+                            &nbsp; (
+                            {(+(Number(value) / totalVisitors) * 100).toFixed(
+                              2
+                            )}
+                            %)
+                          </>
+                        ) : (
+                          ""
                         )}
-
-                        {value}
                       </span>
                     </div>
                   </foreignObject>
-                );
-              }}
-              position="top"
-              dataKey="label"
-            />
-          </Bar>
+                )}
+                position="top"
+                dataKey="visitors"
+              />
 
-          <Bar dataKey="revenue" shape={<CustomBarShape />} stackId="a" />
+              <LabelList
+                content={({ height, y, value, index }) => {
+                  return (
+                    <foreignObject x={10} y={y} width="100%" height={height}>
+                      <div className="w-full h-full flex flex-col cursor-pointer z-100">
+                        <span className="flex gap-2 items-center pt-1   text-[14px]">
+                          {index !== undefined && data[index].imageUrl && (
+                            <img
+                              className="size-[18px]"
+                              alt=""
+                              src={data[index].imageUrl}
+                            />
+                          )}
 
-          {/* <Tooltip
+                          {value}
+                        </span>
+                      </div>
+                    </foreignObject>
+                  );
+                }}
+                position="top"
+                dataKey="label"
+              />
+            </Bar>
+
+            <Bar dataKey="revenue" shape={<CustomBarShape />} stackId="a" />
+
+            {/* <Tooltip
             cursor={{ fill: "none" }}
             content={({ payload }) => (
               <CommonTooltip
@@ -121,8 +124,11 @@ export function CommonChart({
               />
             )}
           /> */}
-        </BarChart>
-      </ResponsiveContainer>
+          </BarChart>
+        </ResponsiveContainer>
+      ) : (
+        <span className="m-auto text-warning">No Data Found</span>
+      )}
     </CardBody>
   );
 }

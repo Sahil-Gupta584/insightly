@@ -105,7 +105,7 @@ export default function Dashboard() {
   }, [duration]);
 
   return (
-    <section className="mb-6">
+    <section className="mb-12">
       {mainGraphQuery.data && mainGraphQuery.data?.isEmpty && (
         <WaitForFirstEvent
           websiteId={websiteId}
