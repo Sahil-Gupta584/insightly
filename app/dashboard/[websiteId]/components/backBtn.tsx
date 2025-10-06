@@ -15,7 +15,8 @@ const BackBtn = ({
 }) => {
   return (
     <Button
-      className={`bg-content1 border border-neutral-700 self-start mb-5 ${className}`}
+      className={`self-start mb-5 ${className}`}
+      variant="ghost"
       startContent={<IoIosArrowRoundUp className="-rotate-90 size-6" />}
       as={Link}
       href={pathname}

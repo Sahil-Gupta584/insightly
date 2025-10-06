@@ -35,9 +35,9 @@ function DisconnectProvider({
         <FaCircleCheck className="text-green-500" /> {provider} is connected
       </h2>
       <Button
-        className="w-fit border-0  "
+        className="w-fit border-0  text-white"
         startContent={<RxCross2 />}
-        variant="ghost"
+        variant="shadow"
         color="danger"
         onPress={() => mutation.mutateAsync()}
         isLoading={mutation.isPending}

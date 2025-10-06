@@ -71,9 +71,7 @@ export default function RootLayout({
         />
       </head>
       <body className={sen.className}>
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark", enableSystem: true }}>
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

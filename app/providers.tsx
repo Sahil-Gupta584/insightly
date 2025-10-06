@@ -1,14 +1,14 @@
 "use client";
 
 import type { ThemeProviderProps } from "next-themes";
-import * as React from "react";
-import { ReactNode, useState } from "react";
 
-import { HeroUIProvider } from "@heroui/system";
 import { ToastProvider } from "@heroui/react";
+import { HeroUIProvider } from "@heroui/system";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { useRouter } from "next/navigation";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import * as React from "react";
+import { ReactNode, useState } from "react";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -23,14 +23,18 @@ declare module "@react-types/shared" {
   }
 }
 
-export function Providers({ children, themeProps }: ProvidersProps) {
+export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
 
   return (
     <HeroUIProvider navigate={router.push}>
       <ReactQueryProvider>
         <ToastProvider placement="top-center" />
-        <NextThemesProvider {...themeProps}>
+        <NextThemesProvider
+          attribute={"class"}
+          defaultTheme={"dark"}
+          enableSystem={true}
+        >
           {children}
         </NextThemesProvider>
       </ReactQueryProvider>

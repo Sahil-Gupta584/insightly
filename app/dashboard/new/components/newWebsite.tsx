@@ -7,7 +7,6 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Divider,
   Input,
@@ -54,8 +53,6 @@ export default function NewWebsite() {
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     },
   });
-
-  const selectedTimeZone = watch("timezone");
 
   useEffect(() => {
     async function init() {
@@ -109,6 +106,7 @@ export default function NewWebsite() {
       errorMsg: "Failed to add website. Please try again.",
     });
   };
+  const selectedTimeZone = watch("timezone");
 
   return (
     <div className="flex flex-col items-center max-w-lg mx-auto">
@@ -123,7 +121,7 @@ export default function NewWebsite() {
           base: "w-full py-4",
           tabList: ["bg-transparent px-0 "],
           tabContent: "group-data-[selected=true]: ",
-          cursor: "bg-transparent!",
+          cursor: "bg-transparent! shadow-none",
           panel: "p-0 w-full",
           tab: "opacity-100!",
         }}
@@ -146,7 +144,19 @@ export default function NewWebsite() {
               <Divider />
               <form onSubmit={handleSubmit(onSubmit)} className="p-4 space-y-4">
                 <Input
-                  {...register("domain")}
+                  value={websiteData?.domain}
+                  onValueChange={(v) => {
+                    let domain;
+                    try {
+                      domain = new URL(v).hostname;
+                    } catch {
+                      domain = v;
+                    }
+                    setWebsiteData(
+                      (prev) => ({ ...prev, domain }) as WebsiteData
+                    );
+                    setValue("domain", domain);
+                  }}
                   label="Domain"
                   labelPlacement="outside"
                   placeholder="unicorn.com"
@@ -195,7 +205,8 @@ export default function NewWebsite() {
                 <Button
                   type="submit"
                   isLoading={isSubmitting}
-                  className="w-full bg-pink-600   hover:bg-pink-500 rounded-xl py-3 mt-6"
+                  color="primary"
+                  className="shadow-md"
                 >
                   Add website
                 </Button>
@@ -227,27 +238,24 @@ export default function NewWebsite() {
             domain={websiteData?.domain as string}
             websiteId={websiteData?.websiteId as string}
             Btn={
-              <CardFooter>
-                <Button
-                  onPress={() => {
-                    const url = websiteData?.step
-                      ? window.location.href.replace("addScript", "revenue")
-                      : "/dashboard/new?step=revenue";
+              <Button
+                onPress={() => {
+                  const url = websiteData?.step
+                    ? window.location.href.replace("addScript", "revenue")
+                    : "/dashboard/new?step=revenue";
 
-                    setWebsiteData(
-                      (prev) => ({ ...prev, step: "revenue" }) as WebsiteData
-                    );
-                    router.push(url);
-                  }}
-                  isLoading={isSubmitting}
-                  className="w-full bg-pink-600   hover:bg-pink-500 rounded-xl py-3 mt-6"
-                  endContent={
-                    <IoIosArrowRoundUp className="rotate-90 size-6" />
-                  }
-                >
-                  OK, I've installed the script
-                </Button>
-              </CardFooter>
+                  setWebsiteData(
+                    (prev) => ({ ...prev, step: "revenue" }) as WebsiteData
+                  );
+                  router.push(url);
+                }}
+                isLoading={isSubmitting}
+                color="primary"
+                endContent={<IoIosArrowRoundUp className="rotate-90 size-6" />}
+                className="shadow-md"
+              >
+                OK, I've installed the script
+              </Button>
             }
           />
         </Tab>

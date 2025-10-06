@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Skeleton } from "@heroui/react";
+import { Button, Card, Skeleton } from "@heroui/react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
@@ -57,10 +57,8 @@ export default function Dashboard() {
           <Button
             href="/dashboard/new"
             startContent={<FaPlus />}
-            className="bg-primary cursor-pointer hover:border-primary-900 border-2 border-transparent 
-             transition-transform duration-150 ease-in-out 
-             translate-y-0 active:translate-y-1 
-               w-fit self-end"
+            color="primary"
+            variant="shadow"
           >
             Add Website
           </Button>
@@ -73,10 +71,11 @@ export default function Dashboard() {
           {Array.isArray(getWebsitesQuery.data) &&
             !getWebsitesQuery.isFetching &&
             getWebsitesQuery.data?.map((website) => (
-              <Link
+              <Card
+                as={Link}
                 key={website.$id}
                 href={`/dashboard/${website.$id}`}
-                className="cursor-pointer rounded-xl border border-neutral-700 bg-[#222225] hover:border-primary-600 transition-colors shadow-sm p-4 flex gap-2"
+                className="gap-2 flex-row p-3"
               >
                 <div className="self-start mt-[3px]">
                   <Favicon domain={website.domain} />
@@ -106,16 +105,18 @@ export default function Dashboard() {
                     </ResponsiveContainer>
                   </div>
                   {/* Stats */}
-                  <div className="flex items-center gap-2 text-sm text-neutral-400">
-                    <span className="font-semibold  ">
+                  <p className="flex items-center gap-2 text-sm ">
+                    <span className="font-bold  ">
                       {Array.isArray(website.events)
                         ? website.events.length
                         : 0}
                     </span>
-                    visitors in last 24h
-                  </div>
+                    <span className="text-default-500">
+                      visitors in last 24h
+                    </span>
+                  </p>
                 </div>
-              </Link>
+              </Card>
             ))}
 
           {Array.isArray(getWebsitesQuery.data) &&
@@ -139,16 +140,13 @@ export default function Dashboard() {
 
 function Loader() {
   return Array.from({ length: 3 }).map((_, i) => (
-    <div
-      key={i}
-      className="rounded-xl border border-neutral-700 bg-[#222225] p-5 flex flex-col gap-4"
-    >
-      <div className="flex items-center gap-3">
+    <Card key={i} className="p-3">
+      <div className="flex items-center gap-3 mb-1">
         <Skeleton className="h-6 w-6 rounded" />
         <Skeleton className="h-5 w-32 rounded" />
       </div>
-      <Skeleton className="h-20 w-full rounded-lg" />
+      <Skeleton className="h-20 w-full rounded-lg mb-2" />
       <Skeleton className="h-4 w-28 rounded" />
-    </div>
+    </Card>
   ));
 }

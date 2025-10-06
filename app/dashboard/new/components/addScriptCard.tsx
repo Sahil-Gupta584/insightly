@@ -14,15 +14,15 @@ export function AddScriptCard({
 }) {
   return (
     <Card className="w-full">
-      <CardBody className="p-0 w-full">
-        <CardHeader className="block text-lg font-semibold p-4">
-          <p className="text-lg font-semibold">{title}</p>
-          <p className="text-tiny text-default-500 ">
-            Paste the snippet in the {"<head>"} of your site. If you need more
-            help.
-          </p>
-        </CardHeader>
-        <Divider />
+      <CardHeader className="block text-lg font-semibold p-4">
+        <p className="text-lg font-semibold">{title}</p>
+        <p className="text-tiny text-default-500 ">
+          Paste the snippet in the {"<head>"} of your site. If you need more
+          help.
+        </p>
+      </CardHeader>
+      <Divider />
+      <CardBody className="p- w-full">
         <div className="p-4 md:text-sm text-xs">
           <CopyBlock
             text={`<script
@@ -36,8 +36,8 @@ export function AddScriptCard({
             wrapLongLines={true}
           />
         </div>
+        {Btn ? Btn : ""}
       </CardBody>
-      {Btn ? Btn : ""}
     </Card>
   );
 }

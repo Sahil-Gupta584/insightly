@@ -19,7 +19,7 @@ export default function Title({
         >
           {isCompleted && (
             <svg
-              className="w-2.5 h-2.5 text-black"
+              className="w-2.5 h-2.5 text-white dark:text-black"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
