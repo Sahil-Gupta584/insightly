@@ -44,6 +44,30 @@ function CommonTooltip({
         ) : (
           ""
         )}
+
+        {(data?.xMentions > 0 || data?.redditMentions > 0) && (
+          <>
+            <Divider className="my-2" />
+            {data?.xMentions > 0 && (
+              <ul className="text-sm flex justify-between">
+                <li className="flex gap-2 items-center">
+                  <div className="size-5 bg-[#1DA1F2] rounded-sm" />
+                  X Mentions
+                </li>
+                <li>{data?.xMentions}</li>
+              </ul>
+            )}
+            {data?.redditMentions > 0 && (
+              <ul className="text-sm flex justify-between mt-1">
+                <li className="flex gap-2 items-center">
+                  <div className="size-5 bg-[#FF4500] rounded-sm" />
+                  Reddit Mentions
+                </li>
+                <li>{data?.redditMentions}</li>
+              </ul>
+            )}
+          </>
+        )}
       </CardBody>
     </Card>
   );

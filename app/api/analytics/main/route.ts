@@ -101,11 +101,16 @@ export async function GET(req: NextRequest) {
           customers: 0,
           sales: 0,
           goalCount: 0,
+          xMentions: 0,
+          redditMentions: 0,
           timestamp: d.toISOString(),
         };
       }
     }
-    // --- Visitors ---
+    // --- Visitors & Mentions ---
+    const xDomains = ["x.com", "twitter.com", "t.co"];
+    const redditDomains = ["reddit.com", "old.reddit.com", "www.reddit.com"];
+
     for (const ev of events) {
       const date = getDateKey(ev.$createdAt, duration);
 
@@ -119,6 +124,16 @@ export async function GET(req: NextRequest) {
         });
       }
       buckets[date].visitors += 1;
+
+      // Track social mentions by referrer
+      const ref = (ev.referrer || "").toLowerCase();
+
+      if (xDomains.some((d) => ref === d || ref.endsWith("." + d))) {
+        buckets[date].xMentions += 1;
+      }
+      if (redditDomains.some((d) => ref === d || ref.endsWith("." + d))) {
+        buckets[date].redditMentions += 1;
+      }
     }
 
     // --- Revenues ---
