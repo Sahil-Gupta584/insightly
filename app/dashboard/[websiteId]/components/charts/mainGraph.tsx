@@ -2,7 +2,7 @@
 import { Button, Card, CardBody, CardHeader, Checkbox } from "@heroui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Area,
   Bar,
@@ -33,6 +33,8 @@ interface MainGraphProps extends TWebsite {
     customers: number;
     sales: number;
     goalCount: number;
+    xMentions: number;
+    redditMentions: number;
   }[];
   duration: string;
   bounceRate: string;
@@ -53,6 +55,8 @@ function MainGraph({
 }: MainGraphProps) {
   const [isVisitorsSelected, setIsVisitorsSelected] = useState(true);
   const [isRevenueSelected, setIsRevenueSelected] = useState(true);
+  const [isXMentionsSelected, setIsXMentionsSelected] = useState(true);
+  const [isRedditMentionsSelected, setIsRedditMentionsSelected] = useState(true);
   const [liveVisitors, setLiveVisitors] = useState<TLiveVisitor[]>([]);
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -64,6 +68,8 @@ function MainGraph({
         label: d.name,
         visitors: d.visitors,
         revenue: d.revenue,
+        xMentions: d.xMentions,
+        redditMentions: d.redditMentions,
         timestamp: d.timestamp,
         id: d.id,
       })),
@@ -104,6 +110,8 @@ function MainGraph({
   }
 
   const revenue = chartData.reduce((prev, cur) => prev + cur.revenue, 0);
+  const totalXMentions = chartData.reduce((prev, cur) => prev + (cur.xMentions || 0), 0);
+  const totalRedditMentions = chartData.reduce((prev, cur) => prev + (cur.redditMentions || 0), 0);
 
   const headerData = [
     {
@@ -156,6 +164,44 @@ function MainGraph({
       value: "$" + revenue,
     },
     {
+      name: "",
+      icon: (
+        <Checkbox
+          classNames={{
+            base: "p-0 m-0 ",
+            label: "text-neutral-400",
+          }}
+          radius="sm"
+          isSelected={isXMentionsSelected}
+          size="sm"
+          onValueChange={setIsXMentionsSelected}
+          style={{ "--heroui-checkbox-checked-bg": "#1DA1F2" } as React.CSSProperties}
+        >
+          X Mentions
+        </Checkbox>
+      ),
+      value: totalXMentions,
+    },
+    {
+      name: "",
+      icon: (
+        <Checkbox
+          classNames={{
+            base: "p-0 m-0 ",
+            label: "text-neutral-400",
+          }}
+          radius="sm"
+          isSelected={isRedditMentionsSelected}
+          size="sm"
+          onValueChange={setIsRedditMentionsSelected}
+          style={{ "--heroui-checkbox-checked-bg": "#FF4500" } as React.CSSProperties}
+        >
+          Reddit Mentions
+        </Checkbox>
+      ),
+      value: totalRedditMentions,
+    },
+    {
       name: "Conversion rate",
       value: (conversionRate || 0).toFixed(2) + "%",
     },
@@ -173,7 +219,7 @@ function MainGraph({
     <>
       <Card className="mt-2 md:col-span-2 border-default border-medium">
         <CardHeader>
-          <div className="grid grid-cols-3 md:grid-cols-7 items-center">
+          <div className="grid grid-cols-3 md:grid-cols-9 items-center">
             {headerData.map((d) => (
               <ul
                 className="px-4 pr-2 my-3.5 border-r-1.5 border-r-neutral-700"
@@ -215,6 +261,14 @@ function MainGraph({
                   <stop offset="0%" stopColor="#fd366e" stopOpacity={0.4} />
                   <stop offset="100%" stopColor="#fd366e" stopOpacity={0} />
                 </linearGradient>
+                <linearGradient id="xMentionsGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#1DA1F2" stopOpacity={0.4} />
+                  <stop offset="100%" stopColor="#1DA1F2" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="redditMentionsGradient" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#FF4500" stopOpacity={0.4} />
+                  <stop offset="100%" stopColor="#FF4500" stopOpacity={0} />
+                </linearGradient>
               </defs>
 
               <XAxis
@@ -254,6 +308,26 @@ function MainGraph({
                 fill="#e78468"
                 radius={[6, 6, 0, 0]}
                 barSize={25}
+              />
+              <Area
+                type="monotone"
+                dataKey="xMentions"
+                stroke="#1DA1F2"
+                strokeWidth={2}
+                fill="url(#xMentionsGradient)"
+                isAnimationActive
+                activeDot={{ r: 6 }}
+                hide={!isXMentionsSelected}
+              />
+              <Area
+                type="monotone"
+                dataKey="redditMentions"
+                stroke="#FF4500"
+                strokeWidth={2}
+                fill="url(#redditMentionsGradient)"
+                isAnimationActive
+                activeDot={{ r: 6 }}
+                hide={!isRedditMentionsSelected}
               />
             </ComposedChart>
           </ResponsiveContainer>
